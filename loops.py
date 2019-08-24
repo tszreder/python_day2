@@ -42,3 +42,35 @@ while len(osoby) > 0:
     group_dict[random.choice(grupa)] = str(i) + "L"
     i += 1
 print(group_dict)
+
+#Continue & break
+
+i = 0
+for liczba in range(1,10,1):
+    print("Obieg:" + str(i+1))
+    if liczba == 5:
+        print("XXX")
+        break
+    i += 1
+
+# while(True):
+#     if input("Co chcesz zrobić? Q - wyjście").upper() == "Q":
+#         print("przerwanie")
+#         break
+import random
+lista  = range(-10,10,1)
+los = random.sample(set(lista), 5)
+licznik = 5.5
+# for i in los:
+#     print("Wylosowana wartość: %i" %i )
+#     if i == 0:
+#         print("Nie można dzielić przez zero")
+#         continue
+#     print("Wynik operacji: %.2f" % (licznik/i))
+
+for i in los:
+    print("Wylosowana wartość: %i" %i )
+    try:
+        print("Wynik operacji: %.2f" % (licznik/i))
+    except:
+        print("Nie można dzielić przez zero")
