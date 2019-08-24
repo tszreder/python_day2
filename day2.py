@@ -31,15 +31,6 @@ użytkownika
  W przeciwnym razie wyświetl stosowny komunikat
 '''
 
-# login = input("Podaj login")
-# password = input("Podaj hasło")
-
-# login, hasło, uprawnienia, aktywacja
-# users = [
-#         ["mk","mk123","ROLE_ADMIN", True],
-#         ["kk","kk123","ROLE_USER", True],
-#         ["ll","ll123","ROLE_USER", True]
-#          ]
 
 #Logowanie na podstawie listy użytkowników
 # Jeżeli błędne hasło będzie podane 3 razy u użytkownika to zablokuj mu konto
@@ -61,33 +52,6 @@ users = [
         ["ll","ll123","ROLE_USER", True, 0]
          ]
 
-# isLogged = False
-# badPasswordCounter = 0
-# while(isLogged == False or badPasswordCounter == 3):
-#     login = input("Podaj login")
-#     for user in users:
-#         #sprawddzam czy jest taki użytkownik
-#         if login == user[0] and user[3] == True:
-#             password = input("Podaj hasło")
-#             #sprawdzam czy podał dobre hasło
-#             if password == user[1]:
-#                 isLogged = True
-#                 # sprawdzam uprawnienia
-#                 if user[2] == "ROLE_ADMIN":
-#                     print("Panel Admina")
-#                     break
-#                 else:
-#                     print("PANEL USERA")
-#                     break
-#             else:
-#                 print("BŁĘDNE HASŁO")
-#                 badPasswordCounter +=1
-#                 if badPasswordCounter == 3:
-#                     user[3] = False
-#         elif login == user[0] and user[3] == False:
-#             print("KONTO ZABLOKOWANE")
-#             isLogged = True
-#             break
 
 isLogged = False
 while(isLogged == False):
