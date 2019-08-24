@@ -19,3 +19,7 @@ c_to_f = {}
 for temp_c in range(-20, 45, 2):
     c_to_f[temp_c] = 9/5 * int(temp_c) + 32
     print("%+4iC | %+6.1fF" % (temp_c, c_to_f[temp_c]))
+
+tC = 44
+print("%i stopni Celsjusza to %.1f stopni Fahrenheita" % (tC, c_to_f[tC]))
+
