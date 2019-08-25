@@ -33,28 +33,30 @@ products = {
 
 # sesja_trwa = True
 basket = {}
-
 print(products)
+sesja_trwa = True
+while(sesja_trwa == True):
+    item = int(input("Wpisz id produktu, 0 - koniec zakupów"))
+    print("%3s | %20s | %5s | %3s| %6s" % ("ID", "PRODUKT", "CENA", "ILOŚĆ", "SUMA"))
+    if item in products:
+        print("zakup możliwy")
+        amount = int(input("Podaj ilość produktu"))
+        if amount <= products[item][2]:
+            print("Dodano do koszyka")
+            order = [products[item][0],products[item][1], amount]
+            basket[item] = order
+            print(basket)
+            products[item][2] = products[item][2] - amount
 
-order = int(input("Wpisz id produktu, który chcesz dodać do koszyka"))
-# while(sesja_trwa == True):
-#     for product in products:
-
-if order in products:
-    print("zakup możliwy")
-    amount = int(input("Podaj ilość produktu"))
-    print(amount)
-    if amount <= products[order][2]:
-        print("Można kupić taką ilość")
-        zam = products[order]
-        zam[2] = amount
-        basket[order] = zam
-        print(basket)
-        products[order][2] = products[order][2] - amount
-        print(products)
-
-
+        else:
+            print("nie ma tyle towaru na magazynie")
+    elif item == 0:
+        sum = 0
+        for key in basket.keys():
+            sum += basket[key][1] * basket[key][2]
+            print("%3i | %20s | %5.2f | %3i | %6.2f" %
+                  (key,basket[key][0],basket[key][1],basket[key][2], basket[key][1] * basket[key][2]))
+        print("Do zapłaty: " + str(sum) + " PLN")
+        sesja_trwa = False
     else:
-        print("nie ma tyle towaru na magazynie")
-else:
-    print("nie ma takiego produktu")
+        print("nie ma takiego produktu")
