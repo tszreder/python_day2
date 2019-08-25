@@ -195,10 +195,76 @@ def generateHTML2(posts, color_name = "black", fontSize = 12, rowNumber = 1):
 print(generateHTML2(posts, "red", 16,5))
 
 
+'''
+Ćwiczenie P64
+ Napisz funkcję, która będzie wyświetlała przy każdym kolejnym wywołaniu na
+przemian nazwy dwóch kolorów: biały i czarny.
+'''
 
 
+def generateHTMLwithBackground(posts, color_name = "black", fontSize = 12):
+    html_content = ""
+    backgroundColor = "black"
+    for post in posts:
+        html_content += '<span style="color: %s; font-size: %s; background-color: %s “>%s</span>\n' % \
+                        (color_name, fontSize, backgroundColor, post)
+        if backgroundColor == "black":
+            backgroundColor = "white"
+        else:
+            backgroundColor = "black"
+    return html_content
+
+print(generateHTMLwithBackground(posts, "red", 16))
+
+color = "black"
+def differentColors():
+    global color # odwołuje się do globalnej zmiennej zadeklarowanej poza funkcją
+    if color == "black":
+        color = "white"
+    else:
+        color = "black"
+    return color
+
+def differentColorsLocal():
+    color = "black" # przy kazdym uruchomieniu funkcji ustawia kolor na black
+    if color == "black":
+        color = "white" # zmienia black na white i zawsze wypisz white, bo kolejnej zmiany już nie ma
+    else:
+        color = "black"
+    return color
+
+print(differentColors())
+print(differentColors())
+print(differentColors())
+print(differentColors())
+print(differentColors())
+print(differentColors())
 
 
+'''
+Ćwiczenie P65
+ Napisz funkcję, która będzie sumowała wszystkie te elementy tablicy które są większe
+od żądane j wartości.
+ Użytkownik podaje wartość progu MinSup (domyślnie 0) i ilość
+generowanych elementów tablicy
+ Elementy tablicy przy każdym uruchomieniu programu są generowane
+losowo z zakresu od -1000 do 1000
+ Niech funkcja zwróci wszystkie elementy większe od wartości progowej oraz wartość
+ich sumy.
+'''
 
+
+def tableSum(minSup, maxSup, tableSize):
+    generatedNumbers = choices(range(-1000, 1000),k = tableSize)
+    sum = 0
+    returnedNumbers = []
+    for number in generatedNumbers:
+        if minSup < number < maxSup:
+            sum += number
+            returnedNumbers.append(number)
+    return generatedNumbers, returnedNumbers, sum, sum/len(returnedNumbers)
+
+
+print(tableSum(-900, 900, 10))
 
 
