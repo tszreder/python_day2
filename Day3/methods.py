@@ -30,11 +30,15 @@ def findMin(data):
 def findMax(data):
     return max(data)
 
-def normalizeDataset(data, lowBorder = 0, topBorder = 1):
+def findExt(data):
+    return min(data), max(data)
+
+
+def normalizeDataset(data, lowBorder = 0, topborder = 1):
     normalizedData = []
     for element in data:
-        a = abs(lowBorder - topBorder)/abs(findMin(data)- findMax(data))
-        b = topBorder - (a * findMax(data))
+        a = abs(lowBorder - topborder)/abs(findExt(data)[0]- findExt(data)[1])
+        b = topborder - (a * findExt(data)[1])
         normalizedData.append(a * element + b)
     return normalizedData
 
@@ -46,3 +50,15 @@ def printDataset(data):
 printDataset(data)
 printDataset(normalizeDataset(data))
 printDataset(normalizeDataset(data, -1, 1))
+
+
+
+# Dowolna liczba argumentów
+
+def gradedsAvg(*grades):
+    sum = 0
+    for grade in grades:
+        sum += grade
+    return sum / len(grades)
+
+print(gradedsAvg(1,2,3,6,4), gradedsAvg(1,2), gradedsAvg(4,5,3,4,4,5,5))
