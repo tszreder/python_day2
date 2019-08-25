@@ -120,6 +120,82 @@ def distance(Ax, Ay, Bx, By):
 
 print(distance(1,1,2,2))
 
+'''
+Ćwiczenie P61
+Zdefiniuj funkcję, która dla podanych trzech parametrów:
+ n=numer elementu ciągu,
+ a1=wartość pierwszego elementu ciągu (domyślnie 1),
+ q=wartość iloczynu ciągu geometrycznego (domyślnie 2)
+Zwróci sumę i n-ty element ciągu geometrycznego. 
+
+an = a1 * q ** (n-1)
+'''
+
+def geometric(n, a1 = 1, q = 2):
+    result = a1 * q ** (n-1)
+    return result
+
+def geometric2(n, a1 = 1, q = 2):
+    ciag = []
+    sum = 0
+    for index in range(1, n + 1):
+        value = a1 * q ** (index-1)
+        ciag.append(value)
+        sum += value
+    return ciag, sum
+
+
+def geometric3(n, a1 = 1, q = 2):
+    suma = 0
+    for index in range(1, n + 1):
+        curValue = a1 * q ** (index-1)
+        suma += curValue
+    return curValue, suma
+
+
+print(geometric3(n=5, a1=2, q=3))
+
+'''
+Ćwiczenie P62
+Zdefiniuj funkcję, która dla dowolnej liczby parametrów zwróci ich średnią
+arytmetyczną (lub 0 dla 0 parametrów).
+'''
+
+def averagePar(*parameters):
+    total = 0
+    for parameter in parameters:
+        total += parameter
+    return total / len(parameters)
+
+print(averagePar(1,2,3,4,5))
+
+
+'''
+Ćwiczenie P63
+ Napisz funkcję generującą kod HTML dla napisu:
+<span style="color: color_name; font-size: value; “>content</span>
+ Użytkownik może podać wartości poszczególnych parametrów, jeśli tego nie zrobi
+przypisywane są wartości domyślne.
+Dodatkowo doddaj argument określający ile razy ma się wygenerować dana treść
+'''
+
+
+def generateHTML(content, color_name = "black", fontSize = 12, rowNumber = 1):
+    html = '<span style="color: %s; font-size: %s; “>%s</span>\n' % (color_name, fontSize, content)
+    return html * rowNumber
+
+posts = ["Post1", "Post2", "Post3", "Post4"]
+
+def generateHTML2(posts, color_name = "black", fontSize = 12, rowNumber = 1):
+    html_content = ""
+    for post in posts:
+        html_content += '<span style="color: %s; font-size: %s; “>%s</span>\n' % (color_name, fontSize, post)
+    return html_content
+
+print(generateHTML2(posts, "red", 16,5))
+
+
+
 
 
 
