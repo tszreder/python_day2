@@ -94,3 +94,32 @@ program = Oprogramowanie("Saper", 200, "c++", "Windows")
 print(program)
 szkolenie = Szkolenie("Excel", 900, "Java", "Linux", "2019-09-29")
 print(szkolenie)
+
+# P72
+#  Napisz prostą klasę zawierającą pola kolorów składające się z wartości RGB.
+#  Przypisz do tych pól dowolne wartości wykorzystując konstruktor klasy
+#  Zrzutuj te parametry RGB na napis i wypisz je poza klasą.
+#  Dodatkowo dodaj kolor zielony i czerwony aby otrzymać kolor żółty – zastosuj operator __add__
+
+class RGB:
+
+    def __init__(self, R, G, B):
+        self.R = R
+        self.G = G
+        self.B = B
+
+    def __str__(self):
+        return "R: %3i G: %3i B: %3i" % (self.R, self.G, self.B)
+
+    def __add__(self, other):
+        newRGB = RGB(self.R + other.R if self.R + other.R <= 255 else 255,
+                     self.G + other.G if self.G + other.G <= 255 else 255,
+                     self.B + other.B if self.B + other.B <= 255 else 255)
+        return newRGB
+
+black = RGB(255,255,255)
+print(black)
+red = RGB(255,0,0)
+green = RGB(0,255,0)
+print(red + green)
+print(green + green)
