@@ -3,7 +3,9 @@
 # Utwórz klasę Zawodnik zawierającą metodę do obliczania BMI
 # Utwórz obiekt reprezentujący zawodnika
 # Wywołaj metodę klasową, która zwróci wartość BMI
+from datetime import datetime
 from random import choice, sample
+
 
 
 class Player:
@@ -43,7 +45,8 @@ class Lotto:
         print(self.__str__())
 
     def __str__(self):
-        return self.result
+        return "%s data losowania: %s" % (self.result, datetime.today().strftime("%d %m %Y"))
+        # return (self.result, datetime.date.today())
 
 # losowanie = sample(range(50), k = 6)
 # print(losowanie)
