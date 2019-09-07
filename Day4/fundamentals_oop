@@ -1,3 +1,6 @@
+from math import sqrt
+
+
 class Point3D:
     def __init__(self, x, y, z):
         self.x = x
@@ -7,8 +10,24 @@ class Point3D:
     def __str__(self):
         return "[x=%d,y=%d,z=%d]" % (self.x, self.y,self.z)
 
+    def __add__(self, other):
+        return Point3D(self.x + other.x, self.y + other.y, self.z + other.z)
+
+    def __gt__(self, other):
+        if sqrt((self.x**2 + self.y**2 + self.z**2) - (other.x**2 + other.y**2 + other.z**2)) > 0:
+            return True
+        return False
+
+    def __eq__(self, other):
+        if self.x == other.x and self.y == other.y and self.z == other.z:
+            return True
+        return False
+
 class Point3DController:
     # metoda do dodawania współrzędnych dwóch punktów
+
+
+
     def sumTwoPoints(self, p1, p2):
         # utworzenie nowego obiektu klasy Point3D
         newPoint = Point3D(p1.x + p2.x, p1.y + p2.y, p1.z+ p2.z)
@@ -87,3 +106,8 @@ print("Nazwa klasy: ", pc.__class__.__name__)
 print("Nazwa klasy: ", pointMultiplied.__class__.__name__)
 print("Nazwa klasy: ", points.__class__)
 print("Typ obiektu: ", type(points))
+
+# Metoda specjalna do sumowania
+print(point2 + point2)
+
+#
