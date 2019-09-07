@@ -1,0 +1,27 @@
+class Point3D:
+    def __init__(self, x, y, z):
+        self.x = x
+        self.y = y
+        self.z = z
+
+    def __str__(self):
+        return "[x=%d,y=%d,z=%d]" % (self.x, self.y,self.z)
+
+class Point3DController:
+    # metoda do dodawania współrzędnych dwóch punktów
+    def sumTwoPoints(self, p1, p2):
+        # utworzenie nowego obiektu klasy Point3D
+        newPoint = Point3D(p1.x + p2.x, p1.y + p2.y, p1.z+ p2.z)
+        return newPoint
+
+point1 = Point3D(0,0,0)
+point2 = Point3D(5,5,5)
+
+print("Point1", point1.x, point1.y, point1.z)
+print(point1)
+print(point2)
+
+#metoda sumująca współrzędne obiektów klasy Point3D
+pc = Point3DController()
+pointSum = pc.sumTwoPoints(point1, point2)
+print(pointSum)
