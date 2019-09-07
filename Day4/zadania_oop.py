@@ -54,3 +54,43 @@ class Lotto:
 lotto1 = Lotto()
 lotto1.draw()
 lotto1.sorting()
+
+# P71
+# Napisz program wykorzystując mechanizm dziedziczenia zawierającego:
+#  Klasę bazową o nazwie Produkt zawierającą konstruktor i metodę wyświetlającą nazwę i cenę produktu.
+#  Klasę Oprogramowanie rozszerzającą klasę Produkt zawierającą konstruktor i metodę wyświetlającą nazwę, cenę, język i system.
+#  Klasę Szkolenia rozszerzającą klasę Oprogramowanie zawierającą konstruktor i metodę wyświetlającą nazwę, cenę, język, system i termin.
+#  Przetestuj działanie klas na podstawie utworzonych obiektów klasy Oprogramowanie i klasy Szkolenia.
+
+class Produkt:
+    def __init__(self, nazwa, cena):
+        self.nazwa = nazwa
+        self.cena = cena
+
+    def __str__(self):
+        return "nazwa produktu to: %-10s cena wynosi: %-4i PLN " % (self.nazwa, self.cena)
+
+class Oprogramowanie(Produkt):
+    def __init__(self, nazwa, cena, jezyk, system):
+        super().__init__(nazwa, cena)
+        self.jezyk = jezyk
+        self.system = system
+
+    def __str__(self):
+        return super().__str__() + "jezyk oprogramowania to: %-5s system to: %-10s" % (self.jezyk, self.system)
+
+class Szkolenie(Oprogramowanie):
+    def __init__(self, nazwa, cena, jezyk, system, termin):
+        super().__init__(nazwa, cena, jezyk, system)
+        self.termin = termin
+
+    def __str__(self):
+        return super().__str__() + "termin to: %-10s" % (self.termin)
+
+print ("########## ZADANIE P71 ############")
+produkt = Produkt("owoc", 30)
+print(produkt)
+program = Oprogramowanie("Saper", 200, "c++", "Windows")
+print(program)
+szkolenie = Szkolenie("Excel", 900, "Java", "Linux", "2019-09-29")
+print(szkolenie)
