@@ -31,6 +31,31 @@ class Point3DController:
             newz += point.z
         return Point3D(newx, newy, newz)
 
+    # ta metoda robi to samo co poprzednia ale posługuje się obiektem zamiast zmiennych
+    def sumAllPoints2(self, list):
+        sumPoint = Point3D(0,0,0)
+        # element listy to obiekt klasy Point3D
+        for point in points:
+            sumPoint.x += point.x
+            sumPoint.y += point.y
+            sumPoint.z += point.z
+        return sumPoint
+
+    # metoda wyszukująca punkt w liście po jego współrzędnych
+    # metoda zwraca wartość typu bool - T/N
+    def findPointOld(self, points, x, y, z):
+        result = 1
+        for point in points:
+            if point.x == x and point.y == y and point.z == z:
+                result = 1
+        return result
+
+    def findPoint(self, points, x, y, z):
+        findPoint = Point3D(x,y,z)
+        for point in points:
+            if point.x == findPoint.x and point.y == findPoint.y and point.z == findPoint.z:
+                return True
+        return False
 
 point1 = Point3D(0,0,0)
 point2 = Point3D(5,5,5)
@@ -50,3 +75,15 @@ print(pc.multiplyByValue(Point3D(1,2,3), 0.5))
 
 points = [Point3D(1,1,1), Point3D(2,2,2), Point3D(3,2,1), Point3D(0,5,11)]
 print(pc.sumAllPoints(points))
+
+points2 = [Point3D(1,1,1), Point3D(2,2,2), Point3D(3,2,1), Point3D(0,5,11), Point3D(4,6,22)]
+print(pc.sumAllPoints2(points2))
+
+print(pc.findPoint(points, 1,1,2))
+print(pc.findPointOld(points, 2,2,2))
+
+print("Nazwa klasy: ", point1.__class__.__name__)
+print("Nazwa klasy: ", pc.__class__.__name__)
+print("Nazwa klasy: ", pointMultiplied.__class__.__name__)
+print("Nazwa klasy: ", points.__class__)
+print("Typ obiektu: ", type(points))
