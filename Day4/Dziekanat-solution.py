@@ -18,17 +18,21 @@ class Student:
         self.lastname = lastname
         # inkrementacja glbalnej wartosci - automatyczne nadawanie numeru indeksu
         global last_insert_index
-        self.index_no = last_insert_index + 1
+        last_insert_index += 1
+        self.index_no = last_insert_index
         # pusta lista ocen
-        self.oceny = []
+        self.grades = []
 
     def __str__(self):
         return "Numer indeksu: %06d | Imię: %-10s | Nazwisko: %-10s | Oceny: %10s" %\
-               (self.index_no, self.name, self.lastname, self.oceny)
+               (self.index_no, self.name, self.lastname, self.grades)
 
 class StudentController:
+    # metoda tworząca konktroler (dziekanat)
     def __init__(self):
         self.students = []
+
+    # metoda wypisująca listę wszystkich studentów
     def __str__(self):
         output = ""
         for student in self.students:
@@ -37,7 +41,9 @@ class StudentController:
 
     #metoda dodająca studenta do listy
     def addStudent(self, name, lastname):
+        #utworzenie obiektu klasy student
         student = Student(name, lastname)
+        #dodanie obiketu do listy
         self.students.append(student)
 
     # metoda wyszukująca studenta
@@ -45,38 +51,40 @@ class StudentController:
         for student in self.students:
             if index_no == student.index_no:
                 return student
-            return None
+        return None
 
     #metoda usuwająca studenta z listy
     def deleteStudentByindex(self, index_no):
         deletedStudent = self.findStudentByIndex(index_no)
         if deletedStudent != None:
             self.students.remove(deletedStudent)
-            print("usunięto studenta")
-        print("nie ma takiego studenta")
+            print("usunięto studenta" + deletedStudent.__str__())
+        else:
+            print("nie ma takiego studenta")
+
+    #dodawanie ocen do studenta
+    def addGradesToStudent(self, index_no, new_grades):
+        foundStudent = self.findStudentByIndex(index_no)
+        if foundStudent != None:
+            foundStudent.grades.extend(new_grades)
+            print("zaktualizowano listę ocen")
+
+    # usuwanie ocen studenta
+    def deleteStudentGraddesByIndex(self,index_no):
+        foundStudent = self.findStudentByIndex(index_no)
+        if foundStudent != None:
+            foundStudent.grades = []
+            print("wyczyszczona lista ocen")
 
 dziekanat = StudentController()
 dziekanat.addStudent("test", "test")
 dziekanat.addStudent("test", "test")
 dziekanat.addStudent("test", "test")
 dziekanat.addStudent("test", "test")
+dziekanat.addGradesToStudent(1, [3,4,5])
+dziekanat.addGradesToStudent(2, [1,4,5])
+dziekanat.addGradesToStudent(3, [5])
 
 print(dziekanat)
 
-# finish = True
-# while finish:
-#     gui = input("Co chcesz zrobić? 1 - dodaj nowego studenta, 2 - wypisz wszystkich studentów, 0 - wyjdź")
-#     if gui == str(0):
-#         finish = False
-#         print("koniec")
-#     elif gui == str(1):
-#         student1 = Student(input("Podaj imie"), input("Podaj nazwisko"))
-#     elif gui == str(2):
-#         for student in students:
-#             print(student)
-#
-#
-# student2 = Student("Tomasz", "Szreder", 123456)
-# dodaj_oceny(student2)
-# print(student2)
 
