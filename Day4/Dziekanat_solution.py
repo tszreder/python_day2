@@ -24,8 +24,16 @@ class Student:
         self.grades = []
 
     def __str__(self):
-        return "Numer indeksu: %06d | Imię: %-10s | Nazwisko: %-10s | Oceny: %10s" %\
-               (self.index_no, self.name, self.lastname, self.grades)
+        return "Numer indeksu: %06d | %-10s | %-10s | %10s | %5.2f" %\
+               (self.index_no, self.name, self.lastname, self.grades, self.calculateAvg())
+
+    def calculateAvg(self):
+        sum = 0
+        for grade in self.grades:
+            sum += grade
+        if len(self.grades) == 0:
+            return 0
+        return sum / len(self.grades)
 
 class StudentController:
     # metoda tworząca konktroler (dziekanat)
