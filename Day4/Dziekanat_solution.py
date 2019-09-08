@@ -76,15 +76,6 @@ class StudentController:
             foundStudent.grades = []
             print("wyczyszczona lista ocen")
 
-dziekanat = StudentController()
-dziekanat.addStudent("test", "test")
-dziekanat.addStudent("test", "test")
-dziekanat.addStudent("test", "test")
-dziekanat.addStudent("test", "test")
-dziekanat.addGradesToStudent(1, [3,4,5])
-dziekanat.addGradesToStudent(2, [1,4,5])
-dziekanat.addGradesToStudent(3, [5])
 
-print(dziekanat)
 
 
