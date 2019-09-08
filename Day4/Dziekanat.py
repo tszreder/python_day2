@@ -16,23 +16,19 @@ class Student:
     def __init__(self, Imie, Nazwisko):
         self.Imie = Imie
         self.Nazwisko = Nazwisko
+        # inkrementacja glbalnej wartosci - automatyczne nadawanie numeru indeksu
         global last_insert_index
         self.Nr_indeksu = last_insert_index + 1
+        # pusta lista ocen
         self.oceny = []
         students.append(self)
 
     def __str__(self):
-        return "Numer indeksu: %06d | Imię: %-10s | Nazwisko: %-10s | Oceny: %10s" % (self.Nr_indeksu, self.Imie, self.Nazwisko, self.oceny)
+        return "Numer indeksu: %06d | Imię: %-10s | Nazwisko: %-10s | Oceny: %10s" %\
+               (self.Nr_indeksu, self.Imie, self.Nazwisko, self.oceny)
 
-    def wypisz_studentow(self):
-        for self in students:
-            print("Numer indeksu: %6s | Imię: %-10s | Nazwisko: %-10s" % (student.Nr_indeksu, student.Imie, student.Nazwisko))
-            print(self)
-            
-    def dodaj_oceny(self):
-        self.oceny.append[1, 2, 3]
 
-students = []
+
 finish = True
 while finish:
     gui = input("Co chcesz zrobić? 1 - dodaj nowego studenta, 2 - wypisz wszystkich studentów, 0 - wyjdź")
