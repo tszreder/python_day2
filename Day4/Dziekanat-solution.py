@@ -13,19 +13,18 @@ import gc
 last_insert_index = 0
 
 class Student:
-    def __init__(self, Imie, Nazwisko):
-        self.Imie = Imie
-        self.Nazwisko = Nazwisko
+    def __init__(self, name, lastname):
+        self.name = name
+        self.lastname = lastname
         # inkrementacja glbalnej wartosci - automatyczne nadawanie numeru indeksu
         global last_insert_index
-        self.Nr_indeksu = last_insert_index + 1
+        self.index_no = last_insert_index + 1
         # pusta lista ocen
         self.oceny = []
-        students.append(self)
 
     def __str__(self):
         return "Numer indeksu: %06d | Imię: %-10s | Nazwisko: %-10s | Oceny: %10s" %\
-               (self.Nr_indeksu, self.Imie, self.Nazwisko, self.oceny)
+               (self.index_no, self.name, self.lastname, self.oceny)
 
 class StudentController:
     def __init__(self):
@@ -35,26 +34,49 @@ class StudentController:
         for student in self.students:
             output += student.__str__() + "\n"
         return output
+
     #metoda dodająca studenta do listy
-    def addStudent(self, Imie, Nazwisko):
-        student = Student(Imie, Nazwisko)
+    def addStudent(self, name, lastname):
+        student = Student(name, lastname)
         self.students.append(student)
 
+    # metoda wyszukująca studenta
+    def findStudentByIndex(self, index_no):
+        for student in self.students:
+            if index_no == student.index_no:
+                return student
+            return None
 
-finish = True
-while finish:
-    gui = input("Co chcesz zrobić? 1 - dodaj nowego studenta, 2 - wypisz wszystkich studentów, 0 - wyjdź")
-    if gui == str(0):
-        finish = False
-        print("koniec")
-    elif gui == str(1):
-        student1 = Student(input("Podaj imie"), input("Podaj nazwisko"))
-    elif gui == str(2):
-        for student in students:
-            print(student)
+    #metoda usuwająca studenta z listy
+    def deleteStudentByindex(self, index_no):
+        deletedStudent = self.findStudentByIndex(index_no)
+        if deletedStudent != None:
+            self.students.remove(deletedStudent)
+            print("usunięto studenta")
+        print("nie ma takiego studenta")
 
+dziekanat = StudentController()
+dziekanat.addStudent("test", "test")
+dziekanat.addStudent("test", "test")
+dziekanat.addStudent("test", "test")
+dziekanat.addStudent("test", "test")
 
-student2 = Student("Tomasz", "Szreder", 123456)
-dodaj_oceny(student2)
-print(student2)
+print(dziekanat)
+
+# finish = True
+# while finish:
+#     gui = input("Co chcesz zrobić? 1 - dodaj nowego studenta, 2 - wypisz wszystkich studentów, 0 - wyjdź")
+#     if gui == str(0):
+#         finish = False
+#         print("koniec")
+#     elif gui == str(1):
+#         student1 = Student(input("Podaj imie"), input("Podaj nazwisko"))
+#     elif gui == str(2):
+#         for student in students:
+#             print(student)
+#
+#
+# student2 = Student("Tomasz", "Szreder", 123456)
+# dodaj_oceny(student2)
+# print(student2)
 
