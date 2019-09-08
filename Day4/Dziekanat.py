@@ -10,21 +10,27 @@ import gc
 # Wyświetlanie wprowadzonych studentów
 # Usuwanie studenta
 
+last_insert_index = 0
+
 class Student:
-    def __init__(self, Imie, Nazwisko, Nr_indeksu):
+    def __init__(self, Imie, Nazwisko):
         self.Imie = Imie
         self.Nazwisko = Nazwisko
-        self.Nr_indeksu = Nr_indeksu
+        global last_insert_index
+        self.Nr_indeksu = last_insert_index + 1
         self.oceny = []
         students.append(self)
 
     def __str__(self):
-        return "Numer indeksu: %6s | Imię: %-10s | Nazwisko: %-10s" % (self.Nr_indeksu, self.Imie, self.Nazwisko)
+        return "Numer indeksu: %06d | Imię: %-10s | Nazwisko: %-10s | Oceny: %10s" % (self.Nr_indeksu, self.Imie, self.Nazwisko, self.oceny)
 
     def wypisz_studentow(self):
-        for student in students:
+        for self in students:
             print("Numer indeksu: %6s | Imię: %-10s | Nazwisko: %-10s" % (student.Nr_indeksu, student.Imie, student.Nazwisko))
-            print(student)
+            print(self)
+            
+    def dodaj_oceny(self):
+        self.oceny.append[1, 2, 3]
 
 students = []
 finish = True
@@ -34,12 +40,13 @@ while finish:
         finish = False
         print("koniec")
     elif gui == str(1):
-        student1 = Student(input("Podaj imie"), input("Podaj nazwisko"), input("Podaj nr ideksu"))
+        student1 = Student(input("Podaj imie"), input("Podaj nazwisko"))
     elif gui == str(2):
         for student in students:
             print(student)
 
 
-# student2 = Student("Tomasz", "Szreder", 123456)
-# print(student2)
+student2 = Student("Tomasz", "Szreder", 123456)
+dodaj_oceny(student2)
+print(student2)
 
