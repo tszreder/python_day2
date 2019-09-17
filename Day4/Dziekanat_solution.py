@@ -1,4 +1,3 @@
-import gc
 # P67
 # Wykorzystując obiektowość napisz program DZIEKANAT, który:
 # Umożliwia przypisanie ocen do studenta identyfikowanego przez:
@@ -16,7 +15,7 @@ class Student:
     def __init__(self, name, lastname):
         self.name = name
         self.lastname = lastname
-        # inkrementacja glbalnej wartosci - automatyczne nadawanie numeru indeksu
+        # inkrementacja globalnej wartosci - automatyczne nadawanie numeru indeksu
         global last_insert_index
         last_insert_index += 1
         self.index_no = last_insert_index
@@ -36,7 +35,10 @@ class Student:
         return sum / len(self.grades)
 
 class StudentController:
+    # w tej klasie obiektem jest zbiór obiektow klasy Student
+
     # metoda tworząca konktroler (dziekanat)
+
     def __init__(self):
         self.students = []
 
@@ -61,7 +63,7 @@ class StudentController:
     def addStudent(self, name, lastname):
         #utworzenie obiektu klasy student
         student = Student(name, lastname)
-        #dodanie obiketu do listy
+        #dodanie obiektu do listy
         self.students.append(student)
 
     # metoda wyszukująca studenta
@@ -93,7 +95,3 @@ class StudentController:
         if foundStudent != None:
             foundStudent.grades = []
             print("wyczyszczona lista ocen")
-
-
-
-
