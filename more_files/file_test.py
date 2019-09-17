@@ -47,7 +47,7 @@ def createResultFile():
 
 def readSelectedFile():
     a = listdir(".")
-    print(a, sep="\n")
+    print(*a, sep="\n")
     fileToRead = input("który plik otworzyć?")
     activeFile = open(fileToRead + '.txt', 'r', encoding='utf16')
     print(activeFile.read())
