@@ -14,9 +14,32 @@ class Measurement_List:
     def __init__(self):
         self.measurements = []
 
-    def addMeasurement(self, user, result):
+    def __str__(self):
+        output = ""
+        for measurement in self.measurements:
+            output += measurement.__str__() + "\n"
+        return output
+
+    def makeMeasurement(self, user, result):
         measure = Measurement(user, result)
         self.measurements.append(measure)
 
-measure = Measurement("Tomek", 12)
-print(measure)
+    def saveMeasurement(self):
+        file = open("pomiary.txt", mode="w+", encoding="utf16")
+        for measurement in self.measurements:
+            file.write(measurement.__str__() + "\n")
+        file.close()
+
+    def addNewMeasurement(self):
+        file = open("pomiary.txt", mode="a+", encoding="utf16")
+        for measurement in self.measurements:
+            file.write(measurement.__str__() + "\n")
+        file.close()
+
+# measure = Measurement("Tomek", 12)
+ml = Measurement_List()
+ml.makeMeasurement("tomek", 12)
+ml.makeMeasurement("Jan", 3)
+ml.saveMeasurement()
+ml.addNewMeasurement()
+print(ml)
