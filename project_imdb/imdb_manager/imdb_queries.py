@@ -1,0 +1,1 @@
+add_actor_query = "insert actors (firstname, lastname, nationality) values ('%s', '%s', '%s')"
