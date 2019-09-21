@@ -21,6 +21,12 @@ class Measurement_List:
         return output
 
     def makeMeasurement(self, user, result):
+        """
+        funkcja tworzy nowy pomiar
+        :param user: nazwa użytkownika, który dokonał pomiaru
+        :param result: wynik pomiaru, który chcemy zapisać
+        :return: None
+        """
         measure = Measurement(user, result)
         self.measurements.append(measure)
 
