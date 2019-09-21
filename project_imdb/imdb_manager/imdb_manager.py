@@ -1,12 +1,9 @@
 import pymysql
 from project_imdb.config import host, user, database, password # wciągamy plik z hasłem, loginem, etc.
-from project_imdb.imdb_manager.imdb_queries import add_actor_query, get_actor_id_query
+from project_imdb.imdb_manager.imdb_queries import add_actor_query, get_actor_id_query, add_person_query
 
 
-class Actor:
-    """
-    Holds data about actors
-    """
+class Person:
 
     def __init__(self, first_name, last_name, nationality):
         self.first_name = first_name
@@ -29,15 +26,19 @@ class ImdbManager:
         # for row in rows:
         #     print(row)
 
-    def addActor(self, actor):
-        """
-        adds actor t actor table given actor object
-        :param actor: actor object
-        :return:
-        """
+    def addPerson(self, person, table):
         cursor = self.conn.cursor()
-        cursor.execute(add_actor_query %  (actor.first_name, actor.last_name, actor.nationality))
+        cursor.execute(add_person_query % (table, person.first_name, person.last_name, person.nationality))
         self.conn.commit()
+
+
+    def addActor(self, person):
+        self.addPerson(person, "actors")
+
+
+    def addDirector(self, person):
+        self.addPerson(person, "directors")
+
 
     def getActorId(self, actor):
         cursor = self.conn.cursor()
@@ -48,7 +49,9 @@ class ImdbManager:
 
 if __name__ == "__main__":
     imdb_manager = ImdbManager(host, user, database, password)
-    actor = Actor(first_name="Jerzy", last_name="Stuhr", nationality="POL")
-    print(imdb_manager.getActorId(actor))
+    actor = Person(first_name="John", last_name="Travolta", nationality="USA")
+    imdb_manager.addActor(actor)
+
+    # print(imdb_manager.getActorId(actor))
 
 
