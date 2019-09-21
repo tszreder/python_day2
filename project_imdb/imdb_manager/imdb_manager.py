@@ -1,6 +1,6 @@
 import pymysql
 from project_imdb.config import host, user, database, password # wciągamy plik z hasłem, loginem, etc.
-from project_imdb.imdb_manager.imdb_queries import add_actor_query, get_actor_id_query, add_person_query
+from project_imdb.imdb_manager.imdb_queries import get_person_id_query, add_person_query, add_genre_query, get_genre_id_query
 
 
 class Person:
@@ -9,6 +9,12 @@ class Person:
         self.first_name = first_name
         self.last_name = last_name
         self.nationality = nationality
+
+
+class Genre:
+
+    def __init__(self, name):
+        self.name = name
 
 
 class ImdbManager:
@@ -31,27 +37,39 @@ class ImdbManager:
         cursor.execute(add_person_query % (table, person.first_name, person.last_name, person.nationality))
         self.conn.commit()
 
-
     def addActor(self, person):
         self.addPerson(person, "actors")
-
 
     def addDirector(self, person):
         self.addPerson(person, "directors")
 
-
-    def getActorId(self, actor):
+    def getPersonId(self, person, table):
         cursor = self.conn.cursor()
-        cursor.execute(get_actor_id_query % (actor.first_name, actor.last_name))
+        cursor.execute(get_person_id_query % (table, person.first_name, person.last_name))
         return cursor.fetchall()[0][0]
 
+    def addGenre(self, genre):
+        cursor = self.conn.cursor()
+        cursor.execute(add_genre_query % genre.name)
+        self.conn.commit()
+        return self.getGenreId(genre)
 
+    def getGenreId(self, genre):
+        cursor = self.conn.cursor()
+        cursor.execute(get_genre_id_query % genre.name)
+        return cursor.fetchall()[0][0]
 
 if __name__ == "__main__":
     imdb_manager = ImdbManager(host, user, database, password)
-    actor = Person(first_name="John", last_name="Travolta", nationality="USA")
-    imdb_manager.addActor(actor)
+    genre = Genre('Action')
+    print(imdb_manager.addGenre(genre))
 
-    # print(imdb_manager.getActorId(actor))
+
+
+    # actor = Person(first_name="John", last_name="Travolta", nationality="USA")
+    # imdb_manager.addActor(actor)
+    # print(imdb_manager.getPersonId(actor))
+
+
 
 
