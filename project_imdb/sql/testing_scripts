@@ -5,11 +5,23 @@ delete from actors where id > 0;
 delete from genres where id_g > 0;
 delete from directors where id > 0;
 
-select Title, a.firstname, a.lastname, d.firstname, d.lastname from
-films as f
-join
-directors as d on d.id = f.id_d
-join
-actor_in_film as aif on f.id_f = aif.id_f
-join
-actors as a on a.id = aif.id_a;
+select
+	Title,
+	a.firstname,
+    a.lastname,
+    d.firstname,
+    d.lastname,
+    g.genreName
+from
+	films as f
+	join directors as d
+		on d.id = f.id_d
+	join actor_in_film as aif
+		on f.id_f = aif.id_f
+	join actors as a
+		on a.id = aif.id_a
+	join film_has_genre as fhg
+		on fhg.id_f = f.id_f
+	join genres as g
+		on g.id_g = fhg.id_g
+;
