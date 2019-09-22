@@ -1,7 +1,9 @@
 import pymysql
 from project_imdb.config import host, user, database, password # wciągamy plik z hasłem, loginem, etc.
-from project_imdb.imdb_manager.imdb_queries import get_person_id_query, add_person_query, add_genre_query, get_genre_id_query
-
+from project_imdb.imdb_manager.imdb_queries \
+    import get_person_id_query, add_person_query, add_genre_query, \
+    get_genre_id_query, add_film_row_query, add_actor_in_film_row, add_film_has_genre_row
+from project_imdb.imdb_manager.film import Film
 
 class Person:
 
@@ -60,14 +62,43 @@ class ImdbManager:
         cursor.execute(get_genre_id_query % genre.name)
         return cursor.fetchall()[0][0]
 
+    def addFilm(self, film):
+        # add new row to table films
+        pass
+
+    def _correctNone(self):
+        pass
+
+    def _addFilmRow(self, film):
+        cursor = self.conn.cursor()
+        cursor.execute(add_film_row_query % (film.title, film.rel_year, film.orig_title,
+                                             film.duration, film.ranking, film.voters, film.rating))
+        self.conn.commit()
+
+    def _addActorInFilm(self, film_id, actor_id):
+        cursor = self.conn.cursor()
+        cursor.execute(add_actor_in_film_row % (film_id, actor_id))
+        self.conn.commit()
+
+    def _addFilmHasGenre(self, film_id, genre_id):
+        cursor = self.conn.cursor()
+        cursor.execute(add_film_has_genre_row % (film_id, genre_id))
+        self.conn.commit()
+
 if __name__ == "__main__":
     imdb_manager = ImdbManager(host, user, database, password)
     # genre = Genre('Action')
     # print(imdb_manager.addGenre(genre))
 
-    actor = Person(first_name="Steven", last_name="Spielberg", nationality="USA")
+    # actor = Person(first_name="Steven", last_name="Spielberg", nationality="USA")
     # imdb_manager.addDirector(actor)
-    print(imdb_manager._getPersonId(actor, "directors"))
+    # print(imdb_manager._getPersonId(actor, "directors"))
+    # et_film = Film(title='Skazani na Shawshank', rel_year='1994', orig_title='Shawshank Redemption',
+    #                ranking='1', rating='9.2')
+    # imdb_manager._addFilmRow(et_film)
+    imdb_manager._addActorInFilm(2,3)
+
+
 
 
 

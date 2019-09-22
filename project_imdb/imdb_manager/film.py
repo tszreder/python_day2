@@ -1,3 +1,10 @@
+def zero_if_none(val):
+    if val is None:
+        return 0
+    else:
+        return val
+
+
 class Film:
     """
     holds information about films
@@ -33,15 +40,17 @@ class Film:
             self.rel_year = rel_year
         else:
             self.rel_year = int(rel_year)
-        self.duration = duration
+        self.duration = zero_if_none(duration)
         self.director = director
-        self.rating = rating
         self.actors = actors
-        self.voters = voters
-        self.ranking = ranking
+        self.voters = zero_if_none(voters)
+        self.rating = zero_if_none(rating)
+        self.ranking = zero_if_none(ranking)
         self.orig_title = orig_title
         self.genres = genres
 
 if __name__ == "__main__":
     film = Film(title="Skazani na Shawshank", rel_year=1994)
     print(film)
+
+
