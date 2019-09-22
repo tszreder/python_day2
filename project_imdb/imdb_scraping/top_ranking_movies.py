@@ -30,7 +30,61 @@ for movie_td in movie_tds:
 
 # wchodzimy na stronę dotyczącą konkretnego filmu
 
+
+counter = 0
 for movie_href in movie_hrefs:
+    counter += 1
     film_detail_content = urllib.request.urlopen(movie_href).read()
     film_detail_soup = bs.BeautifulSoup(film_detail_content, "lxml")
-    print(".")
+
+    # title i year
+    title_wrapper_div = film_detail_soup.find('div',{'class': 'title_wrapper'})
+    year = title_wrapper_div.find('h1').find('span').find('a').text.strip()
+    title = title_wrapper_div.find('h1').text
+    title = title.replace('(%s)' % year, '').strip()
+
+    # director & actors
+    credit_summary_items = film_detail_soup.findAll('div', {'class': 'credit_summary_item'})
+    for credit_summary_item in credit_summary_items:
+        #director
+        if 'Director' in credit_summary_item.find('h4').text:
+            director = credit_summary_item.find('a').text
+            director_split = director.split(' ')
+            d_first_name = director_split[0]
+            d_last_name = director_split[-1]
+            director = Person(d_first_name, d_last_name)
+
+        #actors
+        actors = []
+        if 'Stars' in credit_summary_item.find('h4').text:
+            for a in credit_summary_item.findAll('a'):
+                if not 'full cast' in a.text:
+                    a_split = a.text.split(' ')
+                    a_first_name = a_split[0]
+                    a_last_name = a_split[-1]
+                    actor = Person(a_first_name, a_last_name)
+                    actors.append(actor)
+
+    #genres
+    see_more_elems = film_detail_soup.findAll('div', {'class': 'see-more inline canwrap'})
+    for see_more_elem in see_more_elems:
+        if 'genres' in see_more_elem.find('h4').text.lower():
+            genres = []
+            for a in see_more_elem.findAll('a'):
+                genre = Genre(a.text.strip())
+                genres.append(genre)
+
+    film = Film(title=title, orig_title=title, rel_year=year, director=director, actors=actors, genres=genres)
+    imdb_manager.addFilm(film)
+    print(title)
+    if counter > 10:
+        break
+
+
+    # print(year)
+    # print(director)
+    # print(actors)
+    # print(genres)
+    # print("title: '%s'; genres: '%s'" % (title, ', '.join([el.name for el in genres])))
+    # break
+

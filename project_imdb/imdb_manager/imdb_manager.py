@@ -7,7 +7,7 @@ from project_imdb.imdb_manager.film import Film
 
 class Person:
 
-    def __init__(self, first_name, last_name, nationality):
+    def __init__(self, first_name, last_name, nationality=None):
         self.first_name = first_name
         self.last_name = last_name
         self.nationality = nationality
@@ -41,10 +41,10 @@ class ImdbManager:
         return self._getPersonId(person, table)
 
     def addActor(self, person):
-        self._addPerson(person, "actors")
+        return self._addPerson(person, "actors")
 
     def addDirector(self, person):
-        self._addPerson(person, "directors")
+        return self._addPerson(person, "directors")
 
     def _getPersonId(self, person, table):
         cursor = self.conn.cursor()
@@ -135,12 +135,14 @@ if __name__ == "__main__":
 
     # print(imdb_manager._getPersonId(actor, 'actors'))
 
-    actors = [Person("Sylvester", "Stallone", "USA"), Person("Arnold", "Schwarzenegger", "AUT")]
-    director = Person("Steven", "Spielber", "USA")
-    genres = [Genre("SciFi"), Genre("Family")]
-
-    film = Film(title="ET", rel_year=1983, actors=actors, genres=genres, director=director)
-    imdb_manager.addFilm(film)
+    # actors = [Person("Sylvester", "Stallone"), Person("Arnold", "Schwarzenegger")]
+    director = Person("Steven", "Spielberg")
+    imdb_manager.addDirector(director)
+    print(imdb_manager._getPersonId(director,'directors'))
+    # genres = [Genre("SciFi"), Genre("Family")]
+    #
+    # film = Film(title="ET", rel_year=1983, actors=actors, genres=genres, director=director)
+    # imdb_manager.addFilm(film)
 
 
 
