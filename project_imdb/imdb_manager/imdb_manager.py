@@ -32,18 +32,19 @@ class ImdbManager:
         # for row in rows:
         #     print(row)
 
-    def addPerson(self, person, table):
+    def _addPerson(self, person, table):
         cursor = self.conn.cursor()
         cursor.execute(add_person_query % (table, person.first_name, person.last_name, person.nationality))
         self.conn.commit()
+        return self._getPersonId(person, table)
 
     def addActor(self, person):
-        self.addPerson(person, "actors")
+        self._addPerson(person, "actors")
 
     def addDirector(self, person):
-        self.addPerson(person, "directors")
+        self._addPerson(person, "directors")
 
-    def getPersonId(self, person, table):
+    def _getPersonId(self, person, table):
         cursor = self.conn.cursor()
         cursor.execute(get_person_id_query % (table, person.first_name, person.last_name))
         return cursor.fetchall()[0][0]
@@ -52,9 +53,9 @@ class ImdbManager:
         cursor = self.conn.cursor()
         cursor.execute(add_genre_query % genre.name)
         self.conn.commit()
-        return self.getGenreId(genre)
+        return self._getGenreId(genre)
 
-    def getGenreId(self, genre):
+    def _getGenreId(self, genre):
         cursor = self.conn.cursor()
         cursor.execute(get_genre_id_query % genre.name)
         return cursor.fetchall()[0][0]
@@ -64,11 +65,9 @@ if __name__ == "__main__":
     # genre = Genre('Action')
     # print(imdb_manager.addGenre(genre))
 
-
-
     actor = Person(first_name="Steven", last_name="Spielberg", nationality="USA")
     # imdb_manager.addDirector(actor)
-    print(imdb_manager.getPersonId(actor, "directors"))
+    print(imdb_manager._getPersonId(actor, "directors"))
 
 
 
