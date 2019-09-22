@@ -1,0 +1,15 @@
+delete from film_has_genre where id_fhg > 0;
+delete from actor_in_film where id_aif > 0;
+delete from films where id_f > 0;
+delete from actors where id > 0;
+delete from genres where id_g > 0;
+delete from directors where id > 0;
+
+select Title, a.firstname, a.lastname, d.firstname, d.lastname from
+films as f
+join
+directors as d on d.id = f.id_d
+join
+actor_in_film as aif on f.id_f = aif.id_f
+join
+actors as a on a.id = aif.id_a;
