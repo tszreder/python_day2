@@ -49,7 +49,10 @@ class ImdbManager:
     def _getPersonId(self, person, table):
         cursor = self.conn.cursor()
         cursor.execute(get_person_id_query % (table, person.first_name, person.last_name))
-        return cursor.fetchall()[0][0]
+        try:
+            return cursor.fetchall()[0][0]
+        except IndexError:
+            return None
 
     def addGenre(self, genre):
         cursor = self.conn.cursor()
@@ -60,22 +63,53 @@ class ImdbManager:
     def _getGenreId(self, genre):
         cursor = self.conn.cursor()
         cursor.execute(get_genre_id_query % genre.name)
-        return cursor.fetchall()[0][0]
+        try:
+            return cursor.fetchall()[0][0]
+        except IndexError:
+            return None
 
     def addFilm(self, film):
-        # add new row to table films
-        pass
+        """
+        adds film to database including transition table values
+        :param film:
+        :return:
+        """
 
-    def _correctNone(self):
-        pass
+        actor_ids = []
+        for actor in film.actors:
+            actor_id = self._getPersonId(actor, 'actor')
+            if actor_id is None:
+                actor_id = self.addActor(actor)
+            actor_ids.append(actor_id)
 
-    def _addFilmRow(self, film):
+        genre_ids = []
+        for genre in film.genre:
+            genre_id = self._getGenreId(genre)
+            if genre_id is None:
+                genre_id = self.addGenre(genre)
+            genre_ids.append(genre_id)
+
+        if film.director is not None:
+            director_id = self._getPersonId(film.director, 'directors')
+            if director_id is None:
+                director_id = self.addDirector(film.director)
+
+        film_id = self._addFilmRow(film)
+
+        for actor_id in actor_ids:
+            self._addActorInFilmRow(film_id, actor_id)
+
+        for genre_id in genre_ids:
+            self._addFilmHasGenre(film_id, genre_id)
+
+    def _addFilmRow(self, film, director_id):
         cursor = self.conn.cursor()
         cursor.execute(add_film_row_query % (film.title, film.rel_year, film.orig_title,
-                                             film.duration, film.ranking, film.voters, film.rating))
+                                             film.duration, film.ranking, film.voters, film.rating, director_id))
         self.conn.commit()
+        return cursor.lastrowid
 
-    def _addActorInFilm(self, film_id, actor_id):
+    def _addActorInFilmRow(self, film_id, actor_id):
         cursor = self.conn.cursor()
         cursor.execute(add_actor_in_film_row % (film_id, actor_id))
         self.conn.commit()
@@ -85,20 +119,21 @@ class ImdbManager:
         cursor.execute(add_film_has_genre_row % (film_id, genre_id))
         self.conn.commit()
 
+
 if __name__ == "__main__":
     imdb_manager = ImdbManager(host, user, database, password)
     # genre = Genre('Action')
     # print(imdb_manager.addGenre(genre))
 
-    # actor = Person(first_name="Steven", last_name="Spielberg", nationality="USA")
+    # actor = Person(first_name="Jerzy", last_name="Hoffmann", nationality="POL")
     # imdb_manager.addDirector(actor)
     # print(imdb_manager._getPersonId(actor, "directors"))
-    # et_film = Film(title='Skazani na Shawshank', rel_year='1994', orig_title='Shawshank Redemption',
-    #                ranking='1', rating='9.2')
-    # imdb_manager._addFilmRow(et_film)
-    imdb_manager._addActorInFilm(2,3)
+    et_film = Film(title='Skazani na Shawshank', rel_year='1994', orig_title='Shawshank Redemption',
+                   ranking='1', rating='9.2')
+    print(imdb_manager._addFilmRow(et_film))
+    # imdb_manager._addActorInFilmRow(2, 3)
 
-
+    # print(imdb_manager._getPersonId(actor, 'actors'))
 
 
 
