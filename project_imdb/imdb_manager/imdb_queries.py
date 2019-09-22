@@ -17,7 +17,7 @@ select id_g from genres where genreName = '%s';
 
 add_film_row_query = """
 insert into films (Title, RelYear, OrigTitle, DurationMins, Ranking, Voters, Rating, id_d)
- values ('%s', %s, '%s', %s, %s, %s, %s, %s)
+ values ('%s', %s, '%s', %s, %s, %s, %s, %s);
 """
 
 add_actor_in_film_row = """

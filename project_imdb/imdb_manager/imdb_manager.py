@@ -77,13 +77,13 @@ class ImdbManager:
 
         actor_ids = []
         for actor in film.actors:
-            actor_id = self._getPersonId(actor, 'actor')
+            actor_id = self._getPersonId(actor, 'actors')
             if actor_id is None:
                 actor_id = self.addActor(actor)
             actor_ids.append(actor_id)
 
         genre_ids = []
-        for genre in film.genre:
+        for genre in film.genres:
             genre_id = self._getGenreId(genre)
             if genre_id is None:
                 genre_id = self.addGenre(genre)
@@ -94,7 +94,7 @@ class ImdbManager:
             if director_id is None:
                 director_id = self.addDirector(film.director)
 
-        film_id = self._addFilmRow(film)
+        film_id = self._addFilmRow(film, director_id)
 
         for actor_id in actor_ids:
             self._addActorInFilmRow(film_id, actor_id)
@@ -128,13 +128,19 @@ if __name__ == "__main__":
     # actor = Person(first_name="Jerzy", last_name="Hoffmann", nationality="POL")
     # imdb_manager.addDirector(actor)
     # print(imdb_manager._getPersonId(actor, "directors"))
-    et_film = Film(title='Skazani na Shawshank', rel_year='1994', orig_title='Shawshank Redemption',
-                   ranking='1', rating='9.2')
-    print(imdb_manager._addFilmRow(et_film))
+    # et_film = Film(title='Skazani na Shawshank', rel_year='1994', orig_title='Shawshank Redemption',
+    #                ranking='1', rating='9.2')
+    # print(imdb_manager._addFilmRow(et_film))
     # imdb_manager._addActorInFilmRow(2, 3)
 
     # print(imdb_manager._getPersonId(actor, 'actors'))
 
+    actors = [Person("Sylvester", "Stallone", "USA"), Person("Arnold", "Schwarzenegger", "AUT")]
+    director = Person("Steven", "Spielber", "USA")
+    genres = [Genre("SciFi"), Genre("Family")]
+
+    film = Film(title="ET", rel_year=1983, actors=actors, genres=genres, director=director)
+    imdb_manager.addFilm(film)
 
 
 
