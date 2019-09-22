@@ -12,6 +12,20 @@ def empty_list_if_none(val):
         return val
 
 
+# class Person:
+#
+#     def __init__(self, first_name, last_name, nationality):
+#         self.first_name = first_name
+#         self.last_name = last_name
+#         self.nationality = nationality
+#
+#
+# class Genre:
+#
+#     def __init__(self, name):
+#         self.name = name
+
+
 class Film:
     """
     holds information about films
