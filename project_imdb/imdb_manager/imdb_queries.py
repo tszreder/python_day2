@@ -1,6 +1,6 @@
 
 get_person_id_query = """
-select id from %s where firstname = '%s' and lastname = '%s' order by id_a limit 1;
+select id from %s where firstname = '%s' and lastname = '%s' order by id limit 1;
 """
 
 add_person_query = """

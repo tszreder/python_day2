@@ -61,14 +61,14 @@ class ImdbManager:
 
 if __name__ == "__main__":
     imdb_manager = ImdbManager(host, user, database, password)
-    genre = Genre('Action')
-    print(imdb_manager.addGenre(genre))
+    # genre = Genre('Action')
+    # print(imdb_manager.addGenre(genre))
 
 
 
-    # actor = Person(first_name="John", last_name="Travolta", nationality="USA")
-    # imdb_manager.addActor(actor)
-    # print(imdb_manager.getPersonId(actor))
+    actor = Person(first_name="Steven", last_name="Spielberg", nationality="USA")
+    # imdb_manager.addDirector(actor)
+    print(imdb_manager.getPersonId(actor, "directors"))
 
 
 
